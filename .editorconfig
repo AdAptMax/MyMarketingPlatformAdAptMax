@@ -11,9 +11,9 @@ root = true
 #########################
 [*]
 end_of_line = lf                    # Use LF for all systems (Unix-style)
-insert_final_newline = true         # Ensure newline at EOF
-charset = utf-8                     # Use UTF-8 encoding
-trim_trailing_whitespace = true     # Remove trailing whitespace
+insert_final_newline = true        # Ensure newline at EOF
+charset = utf-8                    # Use UTF-8 encoding
+trim_trailing_whitespace = true    # Remove trailing whitespace
 
 #########################
 # 🌐 Web & Frontend
@@ -40,7 +40,7 @@ indent_size = 2
 # 📄 Markdown
 #########################
 [*.md]
-trim_trailing_whitespace = false    # Allow trailing spaces for line breaks
+trim_trailing_whitespace = false   # Allow trailing spaces for line breaks
 
 #########################
 # 🐍 Python
@@ -60,20 +60,13 @@ indent_size = 4
 # 🧬 Go
 #########################
 [*.go]
-indent_style = tab                  # Go prefers tabs
+indent_style = tab                 # Go prefers tabs
 
 #########################
 # 🛠️ Makefiles
 #########################
 [Makefile]
 indent_style = tab
-
-#########################
-# 📜 C & C++
-#########################
-[*.{c,h,cpp,hpp}]
-indent_style = space
-indent_size = 4
 
 #########################
 # 🧱 Binary / Compiled Files

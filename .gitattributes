@@ -1,0 +1,131 @@
+# --------------------------------------------------
+# 🐐 GOAT-LEVEL .gitattributes
+# Normalize line endings, handle text & binary files,
+# optimize GitHub UI, merge behavior, and future-proof dev stacks.
+# --------------------------------------------------
+
+# Auto-normalize line endings for cross-platform consistency.
+* text=auto
+
+# --------------------------------------------------
+# Treat these filetypes as text (line endings normalized)
+# --------------------------------------------------
+
+# Source code
+*.c text
+*.h text
+*.cpp text
+*.hpp text
+*.cs text
+*.py text
+*.java text
+*.rb text
+*.php text
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.sh text
+*.bat text
+*.cmd text
+*.pl text
+
+# Web & frontend
+*.html text
+*.css text
+*.scss text
+*.less text
+*.vue text
+*.svelte text
+
+# Configs and data
+*.json text
+*.yml text
+*.yaml text
+*.xml text
+*.ini text
+*.env text
+*.toml text
+*.cfg text
+*.conf text
+*.md text
+*.txt text
+*.log text
+
+# Dotfiles & tool configs
+*.eslintrc text
+*.prettierrc text
+*.babelrc text
+*.editorconfig text
+*.gitattributes text
+*.gitignore text
+
+# Lock files
+package-lock.json text
+yarn.lock text
+pnpm-lock.yaml text
+poetry.lock text
+Pipfile.lock text
+
+# Gradle & build scripts
+*.gradle text
+
+# Optional: explicitly specify UTF-8 encoding for some files
+# Uncomment if needed for encoding-sensitive workflows
+# *.txt text working-tree-encoding=UTF-8
+
+# --------------------------------------------------
+# Treat these filetypes as binary (no line ending conversions)
+# --------------------------------------------------
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+
+# Documents & assets
+*.pdf binary
+*.zip binary
+*.gz binary
+*.bz2 binary
+*.7z binary
+*.rar binary
+*.tar binary
+
+# Compiled / built artifacts
+*.exe binary
+*.dll binary
+*.o binary
+*.obj binary
+*.x binary
+*.class binary
+*.jar binary
+*.war binary
+*.pyc binary
+*.pyo binary
+
+# IDE/editor temp files & system files
+*.swp binary
+*.swo binary
+.DS_Store binary
+Thumbs.db binary
+
+# --------------------------------------------------
+# GitHub Linguist overrides (optional)
+# These help GitHub classify your project accurately
+# --------------------------------------------------
+
+# Mark generated/minified files so they don't count in GitHub language stats
+*.min.js linguist-generated
+dist/* linguist-generated
+build/* linguist-generated
+vendor/* linguist-vendored
+
+# --------------------------------------------------
+# Git merge strategies (optional)
+# Useful for lock files that change often
+# --------------------------------------------------
+
+*.lock merge=union
