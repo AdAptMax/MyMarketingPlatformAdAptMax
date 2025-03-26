@@ -1,0 +1,92 @@
+# --------------------------------------------------
+# 🐐 FINAL FORM .editorconfig
+# Enforces consistent coding styles across editors & IDEs
+# Supports full-stack, multi-language, cross-platform projects
+# --------------------------------------------------
+
+root = true
+
+#########################
+# 🔧 Global Defaults
+#########################
+[*]
+end_of_line = lf                    # Use LF for all systems (Unix-style)
+insert_final_newline = true         # Ensure newline at EOF
+charset = utf-8                     # Use UTF-8 encoding
+trim_trailing_whitespace = true     # Remove trailing whitespace
+
+#########################
+# 🌐 Web & Frontend
+#########################
+[*.{js,jsx,ts,tsx,html,css,scss,less}]
+indent_style = space
+indent_size = 2
+
+#########################
+# ⚙️ Config & Data Files
+#########################
+[*.{json,yml,yaml,xml,toml}]
+indent_style = space
+indent_size = 2
+
+#########################
+# 🐚 Shell Scripts
+#########################
+[*.sh]
+indent_style = space
+indent_size = 2
+
+#########################
+# 📄 Markdown
+#########################
+[*.md]
+trim_trailing_whitespace = false    # Allow trailing spaces for line breaks
+
+#########################
+# 🐍 Python
+#########################
+[*.py]
+indent_style = space
+indent_size = 4
+
+#########################
+# ☕ Java & Kotlin
+#########################
+[*.{java,kt}]
+indent_style = space
+indent_size = 4
+
+#########################
+# 🧬 Go
+#########################
+[*.go]
+indent_style = tab                  # Go prefers tabs
+
+#########################
+# 🛠️ Makefiles
+#########################
+[Makefile]
+indent_style = tab
+
+#########################
+# 📜 C & C++
+#########################
+[*.{c,h,cpp,hpp}]
+indent_style = space
+indent_size = 4
+
+#########################
+# 🧱 Binary / Compiled Files
+#########################
+[*.{png,jpg,jpeg,gif,ico,pdf,zip,gz,bz2,7z,rar,tar,exe,dll,o,obj,x,class,jar,war,pyc,pyo}]
+indent_style = unset
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+#########################
+# 🧩 Project-Specific Overrides (Optional)
+#########################
+# Example:
+# [path/to/file.ext]
+# indent_style = space
+# indent_size = 2

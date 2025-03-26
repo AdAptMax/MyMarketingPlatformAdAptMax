@@ -1,0 +1,210 @@
+ name: AdAptMax AI SaaS System 
+description: >
+  A production-grade, self-defending, AI-powered subscription platform with Supabase, Stripe, Redis, and ElevenLabs.
+  Military-grade structure. Designed for zero-failure operation, global scaling, and full-stack monetization.
+
+folders:
+  - server
+  - server/routes
+  - server/controllers
+  - server/services
+  - server/utils
+  - server/middleware
+  - server/config
+  - server/security
+  - server/ai
+  - client
+  - client/pages
+  - client/components
+  - client/lib
+  - client/context
+  - client/hooks
+  - client/styles
+  - client/api
+  - database
+  - tests
+  - scripts
+  - docs
+  - .github/workflows
+
+files:
+  README.md: |
+    # AdAptMax: The Final AI Platform
+    Fully autonomous, revenue-generating, cyber-defensive business AI system.
+
+    ## Core Modules
+    - 🚀 AI-Adaptive Billing & Access Control
+    - 🔐 AES-256 Security Layer + Virus Reversal Protocol
+    - ⚙️ Stripe, Supabase, Redis, ElevenLabs
+    - 📦 Docker + GitHub CI + PowerShell Infrastructure
+    - 📊 Voice Tracking, Subscription Logs, Dynamic Tier Sync
+
+    ## Dev Start
+    Run `scripts/setup.ps1` to build and initialize containers.
+
+  .env.example: |
+    SUPABASE_URL=
+    SUPABASE_SERVICE_ROLE_KEY=
+    SUPABASE_ANON_KEY=
+    JWT_SECRET_KEY=
+    STRIPE_LIVE_SECRET_KEY=
+    STRIPE_PUBLISHABLE_KEY=
+    STRIPE_WEBHOOK_SECRET=
+    REDIS_HOST=
+    REDIS_PORT=
+    REDIS_PASSWORD=
+    ELEVEN_LABS_API_KEY=
+    CORS_ALLOWED_ORIGINS=
+    BASE_URL=
+    PORT=4000
+
+  Dockerfile: |
+    FROM node:18
+    WORKDIR /app
+    COPY package*.json ./
+    RUN npm ci
+    COPY . .
+    EXPOSE 4000
+    CMD ["npm", "start"]
+
+  docker-compose.yml: |
+    version: '3.8'
+    services:
+      app:
+        build: .
+        ports:
+          - "4000:4000"
+        depends_on:
+          - redis
+        environment:
+          - REDIS_HOST=redis
+      redis:
+        image: redis:alpine
+        ports:
+          - "6379:6379"
+
+  scripts/setup.ps1: |
+    Write-Host "🧠 Initializing AdAptMax infrastructure..."
+    docker-compose down
+    docker-compose up -d --build
+    Write-Host "✅ Containers bootstrapped."
+
+  server/server.js: |
+    const express = require('express');
+    const helmet = require('helmet');
+    const cors = require('cors');
+    const rateLimiter = require('./middleware/rateLimiter');
+    const verifyJWT = require('./middleware/auth');
+
+    const app = express();
+    app.use(helmet());
+    app.use(cors());
+    app.use(rateLimiter);
+    app.use(express.json());
+    app.use('/voice', require('./routes/voice'));
+    app.listen(process.env.PORT || 4000, () => console.log('✅ AdAptMax running.'));
+
+  server/config/plans.js: |
+    module.exports = {
+      starter: { priceId: 'price_starter', quota: 1000 },
+      pro: { priceId: 'price_pro', quota: 10000 },
+      enterprise: { priceId: 'price_enterprise', quota: Infinity }
+    };
+
+  server/middleware/checkPlan.js: |
+    const supabase = require('../utils/supabase');
+    const plans = require('../config/plans');
+    module.exports = required => async (req, res, next) => {
+      const { data } = await supabase.from('subscriptions').select('plan').eq('user_id', req.user.id).single();
+      const current = Object.keys(plans).indexOf(data.plan);
+      const needed = Object.keys(plans).indexOf(required);
+      if (current < needed) return res.status(403).send('Upgrade required');
+      next();
+    };
+
+  server/routes/voice.js: |
+    const router = require('express').Router();
+    const speak = require('../controllers/voiceController');
+    const checkPlan = require('../middleware/checkPlan');
+    const verifyJWT = require('../middleware/auth');
+    router.post('/speak', verifyJWT, checkPlan('pro'), speak);
+    module.exports = router;
+
+  server/controllers/voiceController.js: |
+    const eleven = require('../services/elevenLabs');
+    module.exports = async (req, res) => {
+      const { text, voiceId } = req.body;
+      const stream = await eleven.speak(text, voiceId);
+      res.set({ 'Content-Type': 'audio/mpeg' });
+      stream.pipe(res);
+    };
+
+  server/services/elevenLabs.js: |
+    const axios = require('axios');
+    module.exports = {
+      speak: async (text, voiceId = 'Rachel') => {
+        return axios.post(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+          { text, voice_settings: { stability: 0.5, similarity_boost: 0.75 } },
+          { headers: {
+              'xi-api-key': process.env.ELEVEN_LABS_API_KEY,
+              'Content-Type': 'application/json'
+            },
+            responseType: 'stream'
+          });
+      }
+    };
+
+  database/schema.sql: |
+    create table users (
+      id uuid primary key,
+      email text unique
+    );
+
+    create table subscriptions (
+      id serial primary key,
+      user_id uuid references users(id),
+      plan text,
+      status text default 'inactive',
+      stripe_customer_id text
+    );
+
+    create table voice_logs (
+      id serial primary key,
+      user_id uuid,
+      characters_used int,
+      created_at timestamp default now()
+    );
+
+  docs/architecture.md: |
+    # AdAptMax Architecture
+    - Subscriptions synced via Stripe Webhooks
+    - ElevenLabs audio generation and response piping
+    - Redis used for caching and webhook retry
+    - Docker-compose development infrastructure
+    - All access controlled by plan middleware
+
+  .github/workflows/ci.yml: |
+    name: AdAptMax Secure CI
+    on: [push]
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - uses: actions/setup-node@v3
+            with:
+              node-version: '18'
+          - run: npm ci
+          - run: npm run build
+     and then please provide a comprehensive summary of our project, including: 
+
+1. **A detailed list of all tasks completed thus far.** Include specific descriptions of each task, the dates of completion, and any relevant outcomes or metrics.
+2. **A clear and concise description of the overall project goals and objectives.** Outline the purpose of the project, the intended audience, and the desired deliverables.
+3. **A prioritized list of next steps.** For each step, include:
+    * A detailed description of the task.
+    * The assigned individual or team.
+    * The estimated completion date.
+    * Any necessary resources or dependencies.
+    * If code is involved, please supply excellent, well documented, and functional code examples.
+4. **A strategic roadmap outlining the long-term direction of the project.** Include key milestones, potential challenges, and contingency plans.
+5. **Please format the response in a clear, organized, and descriptive manner.** Use bullet points, headings, and subheadings to enhance readability. If code is supplied, please ensure it is well commented, and formatted for easy use
